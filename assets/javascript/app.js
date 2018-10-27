@@ -18,7 +18,26 @@ var questionTest = {
 
 //questionSet will be the array of question-objects
 var questionSet = [
-    
+    {
+        questionText: "What do the two Ms in \"M&M's\" stand for?",
+        choices: ["Mars and Murrie", "Mars and Masterson", "Mars and Mars", "Mars and Masterfoods"],
+        imgUrl: "assets/images/M&Ms.jpg"
+    },
+    {
+        questionText: "What candy bar was named after the inventor's family horse?",
+        choices: ["Snickers", "Butterfinger", "Milky Way", "Baby Ruth"],
+        imgUrl: "assets/images/Snickers.jpg"
+    },
+    {
+        questionText: "What is the top-selling candy in the United States?",
+        choices: ["M&M's", "Reese's Peanut Butter Cups", "Snickers", "Kit Kat"],
+        imgUrl: "assets/images/M&Ms2.jpg"
+    },
+    {
+        questionText: "What were the original flavors of the 3 Musketeers bar?",
+        choices: ["Chocolate, Strawberry, and Vanilla", "Chocolate, Coconut, and Vanilla", "Chocolate, Mint, and Vanilla", "Banana, Chocolate, and Strawberry"],
+        imgUrl: "assets/images/3Musketeers.jpg"
+    }    
 ];
 
 var remainingQuestions = [];
@@ -31,7 +50,7 @@ var correctChoiceImg = "";
 function startGame() {
     remainingQuestions = questionSet;
 
-
+    processQuestion();
 };
 
 
@@ -72,22 +91,12 @@ function processQuestion() {
         };
 
     }
-
-
-
-    
-
-
-    
-    
-    
-
 };
 
 
 
 
-processQuestion(questionTest);
+
 
 
 
