@@ -37,6 +37,36 @@ var questionSet = [
         questionText: "What were the original flavors of the 3 Musketeers bar?",
         choices: ["Chocolate, Strawberry, and Vanilla", "Chocolate, Coconut, and Vanilla", "Chocolate, Mint, and Vanilla", "Banana, Chocolate, and Strawberry"],
         imgUrl: "assets/images/3Musketeers.jpg"
+    },
+    {
+        questionText: "What candy bar was originally introduced in the UK as \"Rowntree's Chocolate Crisp\"?",
+        choices: ["Kit Kat", "Heath Bar", "Butterfinger", "Milky Way"],
+        imgUrl: "assets/images/KitKat.jpg"
+    },
+    {
+        questionText: "What candy bar was called \"Raider\" in France and Germany until 1991?",
+        choices: ["Twix", "Milky Way", "Baby Ruth", "Tracker"],
+        imgUrl: "assets/images/TwixRaider.jpg"
+    },
+    {
+        questionText: "Complete this slogan from the 1990s: \"There's no wrong way to eat a _____\"",
+        choices: ["Reese's", "Hershey Bar", "Rolo", "PayDay"],
+        imgUrl: "assets/images/Reeses.jpg"
+    },
+    {
+        questionText: "What are the five primary ingredients in a Take 5?",
+        choices: ["Caramel, Chocolate, Peanut Butter, Peanuts, and Pretzels", "Caramel, Chocolate, Nougat, Peanuts, and Pretzels", "Caramel, Chocolate, Crisped Rice, Peanuts, and Pretzels", "Almonds, Caramel, Chocolate, Peanut Butter, and Peanuts"],
+        imgUrl: "assets/images/Take5.jpg"   
+    },
+    {
+        questionText: "Which company refers to its chocolate bar as \"The Great American Chocolate Bar\"?",
+        choices: ["Hershey", "Cadbury", "Mars", "Nestlé"],
+        imgUrl: "assets/images/HersheyCompany.png"
+    },
+    {
+        questionText: "What candy was marketed with the slogan \"Taste the Rainbow\"?",
+        choices: ["Skittles", "M&M's", "Starburst", "Mike and Ike"],
+        imgUrl: "assets/images/Skittles.jpg"
     }    
 ];
 
@@ -46,8 +76,9 @@ var correctChoice = "";
 var correctChoiceImg = "";
 
 //these variables are per-game; should be set to 0 when the game is (re)started
-var countCorrect;
-var CountIncorrect;
+var countCorrect = 0;
+var countIncorrect = 0;
+var countUnanswered = 0;
 
 var timeRemaining;
 
@@ -67,6 +98,10 @@ function processQuestion() {
 
     if (remainingQuestions.length === 0) {
         // end of game scenario
+        $("#questionDiv").empty();
+        $("#timerDisplayDiv").empty();
+        $("#messageDisplay").empty();
+        $("#centralDisplay").html("Correct responses: " + countCorrect + "<br>Incorrect responses: " + countIncorrect + "<br> Unanswered questions: " + countUnanswered)
     }
     else {
         var randQIndex = Math.floor(Math.random() * remainingQuestions.length);
@@ -83,7 +118,8 @@ function processQuestion() {
         //display the questionText in the questionDiv
         $("#questionDiv").text(currentQuestion.questionText);    
     
-
+        $("#centralDisplay").empty();
+        $("#messageDisplay").empty();
         //"shuffle" choices array;; here, work with a copy of the choices array, instead of calling methods on the original; preserving the original array allows the game to be replayed without reloading the page    
         //UPDATE: no need to make a copy of the choices array; we instead made a copy of the questionSet array
         
@@ -123,6 +159,9 @@ function displayAnswer() {
 
     var correctChoiceImgDisplay = $("<img>").attr("src", correctChoiceImg);
     $("#centralDisplay").append(correctChoiceImgDisplay);
+
+    // set a timer, then call processQuestion()
+    setTimeout(processQuestion, 1000 * 3);
 };
 
 function checkAnswer() {
@@ -138,7 +177,7 @@ function checkAnswer() {
     }
     else {
         $("#messageDisplay").text("Incorrect! The correct answer is: ");
-        CountIncorrect += 1;
+        countIncorrect += 1;
     };
 
     displayAnswer();
@@ -160,6 +199,8 @@ function decrement() {
         clearInterval(intervalID);
 
         $("#messageDisplay").text("Time's up! The correct answer is: ");
+        countUnanswered += 1;
+
         displayAnswer();
     };
 };
