@@ -49,6 +49,9 @@ var correctChoiceImg = "";
 var countCorrect;
 var CountIncorrect;
 
+var timeRemaining;
+
+var intervalID;
 
 // called when start or restart game button is clicked
 // copies questionSet 
@@ -94,6 +97,11 @@ function processQuestion() {
 
             currentQuestion.choices.splice(randCIndex, 1);
         };
+
+        timeRemaining = 10;
+        $("#timerDisplay").text(timeRemaining);
+
+        intervalID = setInterval(decrement, 1000)
     };
 };
 
@@ -119,6 +127,9 @@ function displayAnswer() {
 
 function checkAnswer() {
     
+    //first, stop the timer
+    clearInterval(intervalID);
+
     var userAnswer = $(this).text()
     
     if (userAnswer === correctChoice) {
@@ -138,3 +149,17 @@ function checkAnswer() {
 $(document).on("click", ".choice", checkAnswer);
 
 
+// timing function(s)
+
+function decrement() {
+    timeRemaining -= 1;
+
+    $("#timerDisplay").text(timeRemaining);
+
+    if (timeRemaining < 1) {
+        clearInterval(intervalID);
+
+        $("#messageDisplay").text("Time's up! The correct answer is: ");
+        displayAnswer();
+    };
+};
