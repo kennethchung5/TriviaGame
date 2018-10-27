@@ -45,6 +45,11 @@ var remainingQuestions = [];
 var correctChoice = "";
 var correctChoiceImg = "";
 
+//these variables are per-game; should be set to 0 when the game is (re)started
+var countCorrect;
+var CountIncorrect;
+
+
 // called when start or restart game button is clicked
 // copies questionSet 
 function startGame() {
@@ -89,8 +94,7 @@ function processQuestion() {
 
             currentQuestion.choices.splice(randCIndex, 1);
         };
-
-    }
+    };
 };
 
 
@@ -113,7 +117,24 @@ function displayAnswer() {
     $("#centralDisplay").append(correctChoiceImgDisplay);
 };
 
+function checkAnswer() {
+    
+    var userAnswer = $(this).text()
+    
+    if (userAnswer === correctChoice) {
+        $("#messageDisplay").text("Correct!");
+        countCorrect += 1;
+    }
+    else {
+        $("#messageDisplay").text("Incorrect! The correct answer is: ");
+        CountIncorrect += 1;
+    };
+
+    displayAnswer();
+};
 
 
 //create click event listener for .choice; this should call a function that checks the answer
-$(document).on("click", ".choice", displayAnswer);
+$(document).on("click", ".choice", checkAnswer);
+
+
