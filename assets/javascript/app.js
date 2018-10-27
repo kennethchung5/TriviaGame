@@ -76,21 +76,39 @@ var correctChoice = "";
 var correctChoiceImg = "";
 
 //these variables are per-game; should be set to 0 when the game is (re)started
-var countCorrect = 0;
-var countIncorrect = 0;
-var countUnanswered = 0;
+var countCorrect;
+var countIncorrect;
+var countUnanswered;
 
 var timeRemaining;
 
 var intervalID;
 
+
+
 // called when start or restart game button is clicked
-// copies questionSet 
-function startGame() {
-    remainingQuestions = questionSet;
+$("#startBtn").on("click", function() {
+
+    $("#startBtn").hide();
+
+    //this was not the way to make a copy of questionSet; it merely passes references to the same objects
+        // make remainingQuestions a copy of questionSet;
+        // for (i = 0; i < questionSet.length; i++) {
+        //     remainingQuestions.push(questionSet[i]);
+        // };
+
+    //***/make a "deep" copy of questionSet (not just references)
+    remainingQuestions = JSON.parse(JSON.stringify(questionSet));
+
+    countCorrect = 0;
+    countIncorrect = 0;
+    countUnanswered = 0;
+
+
+    $("#timerDisplayDiv").html("Time remaining: <span id=\"timerDisplay\"></span>");
 
     processQuestion();
-};
+});
 
 
 function processQuestion() {
@@ -100,8 +118,11 @@ function processQuestion() {
         // end of game scenario
         $("#questionDiv").empty();
         $("#timerDisplayDiv").empty();
-        $("#messageDisplay").empty();
+        $("#messageDisplay").text("Game over! Here's how you did:");
         $("#centralDisplay").html("Correct responses: " + countCorrect + "<br>Incorrect responses: " + countIncorrect + "<br> Unanswered questions: " + countUnanswered)
+
+        $("#startBtn").text("Play again");
+        $("#startBtn").show();
     }
     else {
         var randQIndex = Math.floor(Math.random() * remainingQuestions.length);
@@ -110,8 +131,7 @@ function processQuestion() {
 
         remainingQuestions.splice(randQIndex, 1);
 
-        // what to do with the selected word
-            //store the correct answer
+        //for the selected question, store the correct answer and img url
         correctChoice = currentQuestion.choices[0];
         correctChoiceImg = currentQuestion.imgUrl;
 
@@ -120,13 +140,13 @@ function processQuestion() {
     
         $("#centralDisplay").empty();
         $("#messageDisplay").empty();
+
         //"shuffle" choices array;; here, work with a copy of the choices array, instead of calling methods on the original; preserving the original array allows the game to be replayed without reloading the page    
-        //UPDATE: no need to make a copy of the choices array; we instead made a copy of the questionSet array
-        
+        //UPDATE: no need to make a copy of the choices array; we instead made a copy of the questionSet array        
         // this for loop selects each element of currentQuestion.choices, in a random order, and creates a div using the elements' text
         for (var i = currentQuestion.choices.length; i > 0; i--) {
             var randCIndex = Math.floor(Math.random() * i);
-
+            
             var choiceDiv = $("<div>").text(currentQuestion.choices[randCIndex]);
             choiceDiv.addClass("choice");
             $("#centralDisplay").append(choiceDiv);
@@ -137,6 +157,7 @@ function processQuestion() {
         timeRemaining = 10;
         $("#timerDisplay").text(timeRemaining);
 
+        clearInterval(intervalID);
         intervalID = setInterval(decrement, 1000)
     };
 };
@@ -154,8 +175,6 @@ function displayAnswer() {
 
     var correctChoiceDiv = $("<div>").text(correctChoice);
     $("#centralDisplay").append(correctChoiceDiv);
-
-    console.log("The url is " + correctChoiceImg);
 
     var correctChoiceImgDisplay = $("<img>").attr("src", correctChoiceImg);
     $("#centralDisplay").append(correctChoiceImgDisplay);

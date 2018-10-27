@@ -1,3 +1,7 @@
 .choice:hover {
     background-color: orange;
 }
+
+div {
+    height: 40px;
+}
