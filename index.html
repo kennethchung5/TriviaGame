@@ -1,26 +1,48 @@
 <!doctype html>
 <html>
 <head>
+    <title>Trick-or-Trivia</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
-    <button id="startBtn">Start Game</button>
+<body style="background-image: url(assets/images/background1.png)">
 
-    <br><br>
-    <div id="questionDiv" style="border: red dashed;"></div>
 
-    <br><br>
+    <div class="container">
+        
+        <div class="col-md-8 mainContent">
 
-    <div id="timerDisplayDiv" style="border: orange dashed;"></div>
-    <br><br>
+            <div class="row">
+                <!--title here-->
+                <h1 class="gameTitle">Trick-or-Trivia</h1>
+            </div>
+            
+            <div class="row">
+                <div class="buttonSpace">
+                    <button id="startBtn">Start Game</button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div id="timerDisplayDiv"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div id="questionDiv"></div>
+            </div>
+            <div class="row">
+                <div id="messageDisplay"></div>
+            </div>
 
-    <div id="messageDisplay" style="border: yellow dashed;"></div>
+            <div class="row">
+                <div id="centralDisplay"></div>
+            </div>
 
-    <br><br>
 
-    <div id="centralDisplay" style="border: green dashed;"></div>
+            <br><br>
+        </div>
+    </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/javascript/app.js"></script>

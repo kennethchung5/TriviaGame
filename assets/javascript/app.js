@@ -118,8 +118,12 @@ function processQuestion() {
         // end of game scenario
         $("#questionDiv").empty();
         $("#timerDisplayDiv").empty();
-        $("#messageDisplay").text("Game over! Here's how you did:");
-        $("#centralDisplay").html("Correct responses: " + countCorrect + "<br>Incorrect responses: " + countIncorrect + "<br> Unanswered questions: " + countUnanswered)
+        $("#messageDisplay").html("Game over! Here's how you did:<br><br>");
+
+        var summaryDiv = $("<div>").html("Correct responses: " + countCorrect + "<br>Incorrect responses: " + countIncorrect + "<br> Unanswered questions: " + countUnanswered);
+        summaryDiv.addClass("centeredMsg");
+
+        $("#centralDisplay").html(summaryDiv);
 
         $("#startBtn").text("Play again");
         $("#startBtn").show();
@@ -139,7 +143,7 @@ function processQuestion() {
         $("#questionDiv").text(currentQuestion.questionText);    
     
         $("#centralDisplay").empty();
-        $("#messageDisplay").empty();
+        $("#messageDisplay").hide();
 
         //"shuffle" choices array;; here, work with a copy of the choices array, instead of calling methods on the original; preserving the original array allows the game to be replayed without reloading the page    
         //UPDATE: no need to make a copy of the choices array; we instead made a copy of the questionSet array        
@@ -171,12 +175,16 @@ function processQuestion() {
 
 
 function displayAnswer() {
+    $("#messageDisplay").show();
+
     $("#centralDisplay").empty();
 
     var correctChoiceDiv = $("<div>").text(correctChoice);
+    correctChoiceDiv.addClass("centeredMsg");
     $("#centralDisplay").append(correctChoiceDiv);
 
     var correctChoiceImgDisplay = $("<img>").attr("src", correctChoiceImg);
+    correctChoiceImgDisplay.addClass("displayedImg");
     $("#centralDisplay").append(correctChoiceImgDisplay);
 
     // set a timer, then call processQuestion()
@@ -212,7 +220,7 @@ $(document).on("click", ".choice", checkAnswer);
 function decrement() {
     timeRemaining -= 1;
 
-    $("#timerDisplay").text(timeRemaining);
+    $("#timerDisplay").text("0" + timeRemaining);
 
     if (timeRemaining < 1) {
         clearInterval(intervalID);

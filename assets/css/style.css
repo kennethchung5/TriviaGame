@@ -1,7 +1,98 @@
-.choice:hover {
-    background-color: orange;
+html, body {
+    height: 100%;
+    
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-div {
+.mainContent {
+    margin: 15px auto 0;
+    height: 560px;
+    background-color: gray;
+}
+
+.gameTitle {
+    width: 90%;
+    margin: 20px auto;
+    padding: 10px 0;
+    text-align: center;
+    background-color: black;
+    color: orange;
+}
+
+.buttonSpace {
+    margin: auto;
     height: 40px;
+}
+
+.choice {
+    padding: 3px 15px;
+    border: green solid thin;
+    background-color: silver;
+}
+
+.choice:hover {
+    color: orange;
+    background-color: black;    
+}
+
+.centeredMsg {
+    text-align: center;
+    margin: auto;
+    width: 66%;
+
+    color: greenyellow;
+    font-weight: bold;
+}
+
+.displayedImg {
+    display: block;
+    margin: auto;
+
+    height: 180px;
+}
+
+
+#startBtn {
+    display: block;
+    margin: auto;
+}
+
+#timerDisplayDiv {
+    height: 40px;
+    width: 40%;
+    margin: auto;
+    text-align: center;
+    line-height: 40px;
+    background-color: black;
+    color: red;
+}
+
+#questionDiv {
+    height: 50px;
+    width: 90%;
+    margin: auto;
+
+    padding: 0 15px;
+    line-height: 50px;
+    background-color: purple;
+    color: white;
+}
+
+#messageDisplay {
+    width: 40%;
+    margin: auto;
+    text-align: center;
+
+    height: 35px;
+    line-height: 35px;
+
+    color: orange;
+    font-weight: bold;
+}
+
+#centralDisplay {
+    height: 300px;
+    width: 90%;
+    margin: auto;
 }
