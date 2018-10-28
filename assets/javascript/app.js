@@ -1,20 +1,16 @@
-//notes
+//represent each question as an object ("question-object")
+    //Notes for question-object formatting: 
+        // consistent property names (so that they can recognized by processQuestion function)
+        // list the correct answer choice as the 0th element of choices array
+        // the imgUrl is from the perspective of index.html, not app.js
     
+// test question-object
+// var questionTest = {
+//     questionText: "What is the answer?",
+//     choices: ["CORRECT CHOICE", "Wrong choice #1", "Wrong choice #2", "Wrong choice #3", "Wrong choice #4", "Wrong choice #5"], 
+//     imgUrl: "assets/images/abstract-q-c-200-200-9.jpg"
+// }
 
-
-//represent each question as an object
-    // consistent property names (so that they can recognized by processQuestion function)
-    // list the correct answer choice as the 0th element of choices array
-
-    // note: the imgUrl is from the perspective of index.html
-//? put the question objects into an array?
-    //then, randomly select questions?
-
-var questionTest = {
-    questionText: "What is the answer?",
-    choices: ["CORRECT CHOICE", "Wrong choice #1", "Wrong choice #2", "Wrong choice #3", "Wrong choice #4", "Wrong choice #5"], 
-    imgUrl: "assets/images/abstract-q-c-200-200-9.jpg"
-}
 
 //questionSet will be the array of question-objects
 var questionSet = [
@@ -112,7 +108,7 @@ $("#startBtn").on("click", function() {
 
 
 function processQuestion() {
-// choosing the word, and checking for end-of-game
+// check for end of game; if questions remain, then randomly choose the next question, display it and the answer choices, and set interval
 
     if (remainingQuestions.length === 0) {
         // end of game scenario
@@ -145,9 +141,10 @@ function processQuestion() {
         $("#centralDisplay").empty();
         $("#messageDisplay").hide();
 
-        //"shuffle" choices array;; here, work with a copy of the choices array, instead of calling methods on the original; preserving the original array allows the game to be replayed without reloading the page    
-        //UPDATE: no need to make a copy of the choices array; we instead made a copy of the questionSet array        
-        // this for loop selects each element of currentQuestion.choices, in a random order, and creates a div using the elements' text
+        // "shuffle" choices array;; here, work with a copy of the choices array, instead of calling methods on the original; preserving the original array allows the game to be replayed without reloading the page    
+        // UPDATE: no need to make a copy of the choices array; we instead made a copy of the questionSet array     
+
+        // each iteration of this for loop randomly selects a remaining element of currentQuestion.choices and creates and displays a div using the element's text
         for (var i = currentQuestion.choices.length; i > 0; i--) {
             var randCIndex = Math.floor(Math.random() * i);
             
@@ -158,6 +155,7 @@ function processQuestion() {
             currentQuestion.choices.splice(randCIndex, 1);
         };
 
+        // initialize timer
         timeRemaining = 10;
         $("#timerDisplay").text(timeRemaining);
 
@@ -169,11 +167,7 @@ function processQuestion() {
 
 
 
-
-
-
-
-
+// the displayAnswer() function is called by both checkAnswer() (whether correct or incorrect) and decrement() (when time is up)
 function displayAnswer() {
     $("#messageDisplay").show();
 
@@ -191,6 +185,7 @@ function displayAnswer() {
     setTimeout(processQuestion, 1000 * 3);
 };
 
+// checkAnswer() is called upon a click on a div with the .choice class (which represents the user's submission of an answer)
 function checkAnswer() {
     
     //first, stop the timer
@@ -211,15 +206,15 @@ function checkAnswer() {
 };
 
 
-//create click event listener for .choice; this should call a function that checks the answer
+//create click event listener for .choice; this calls checkAnswer
 $(document).on("click", ".choice", checkAnswer);
 
 
-// timing function(s)
-
+// timing function
 function decrement() {
     timeRemaining -= 1;
 
+    // quick fix to zero-pad the time display to 2 digits; this assumes that timeRemaining is set to 10 (so that decrementing it immediately results in 1 digit)
     $("#timerDisplay").text("0" + timeRemaining);
 
     if (timeRemaining < 1) {
