@@ -4,7 +4,7 @@ https://kennethchung5.github.io/TriviaGame/
 
 This is a simple game written in JavaScript with jQuery. The app presents timed multiple-choice trivia questions, one at a time, proceeding through the set of questions with only the user's answer choice as input. At the end of a playthrough, the user is able to restart the game without reloading the app. Random number generation is used in both the question selection and the distribution of answer choices per question, so each playthrough will be different (probably). 
 
-One highlight is this line of code (line 97) executed when the user clicks the "Start Game"/"Play again" button:  
+One noteworthy point is this line of code (line 97 in app.js) executed when the user clicks the "Start Game"/"Play again" button:  
 
     remainingQuestions = JSON.parse(JSON.stringify(questionSet));
 
